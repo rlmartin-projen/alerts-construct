@@ -1,5 +1,3 @@
-export class Hello {
-  public sayHello() {
-    return 'hello, world!';
-  }
-}
+export * as alerts from './alerts';
+export * from './allAlerts';
+export * from './types';

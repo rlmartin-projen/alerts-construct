@@ -8,6 +8,8 @@ const project = new typescript.TypeScriptProject({
   projenrcTs: true,
   releaseToNpm: true,
   npmAccess: NpmAccess.PUBLIC,
+  repository: 'https://github.com/rlmartin-projen/alerts-construct',
+  workflowNodeVersion: '20',
   majorVersion,
   releaseBranches: {
     dev: { prerelease: 'dev', npmDistTag: 'dev', majorVersion },
@@ -17,7 +19,11 @@ const project = new typescript.TypeScriptProject({
       branches: ['main'],
     },
   },
-  // deps: [],                /* Runtime dependencies of this module. */
+  deps: [
+    '@cdktf/provider-datadog@~10',
+    '@rlmartin-projen/cdktf-project@~4',
+    'constructs@~10',
+  ],
   // description: undefined,  /* The description is just a string that helps people understand the purpose of the package. */
   // devDeps: [],             /* Build dependencies for this module. */
   // packageName: undefined,  /* The "name" in package.json. */
