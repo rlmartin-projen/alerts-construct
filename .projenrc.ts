@@ -17,7 +17,11 @@ const project = new typescript.TypeScriptProject({
       branches: ['main'],
     },
   },
-  // deps: [],                /* Runtime dependencies of this module. */
+  deps: [
+    '@cdktf/provider-datadog@~10',
+    '@rlmartin-projen/cdktf-project@~4',
+    'constructs@~10',
+  ],
   // description: undefined,  /* The description is just a string that helps people understand the purpose of the package. */
   // devDeps: [],             /* Build dependencies for this module. */
   // packageName: undefined,  /* The "name" in package.json. */
