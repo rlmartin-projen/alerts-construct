@@ -1,5 +1,9 @@
 {
   "name": "@rlmartin-projen/alerts-construct",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/rlmartin-projen/alerts-construct"
+  },
   "scripts": {
     "build": "npx projen build",
     "bump": "npx projen bump",

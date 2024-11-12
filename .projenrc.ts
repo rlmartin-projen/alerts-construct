@@ -8,6 +8,7 @@ const project = new typescript.TypeScriptProject({
   projenrcTs: true,
   releaseToNpm: true,
   npmAccess: NpmAccess.PUBLIC,
+  repository: 'https://github.com/rlmartin-projen/alerts-construct',
   workflowNodeVersion: '20',
   majorVersion,
   releaseBranches: {
