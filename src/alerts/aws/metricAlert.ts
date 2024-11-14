@@ -29,8 +29,11 @@ export interface AwsMetricAlert<Namespace extends string> extends Alert<Namespac
     readonly overSeconds?: AllowedSeconds;
     readonly type: AggregateType;
   };
-  readonly metricName: string;
-  readonly metricNamespace?: string;
+  readonly metric: {
+    readonly name: string;
+    readonly namespace?: string;
+    readonly dimensions?: { [key: string]: string };
+  };
   readonly watch: {
     readonly operator: ComparisonOperator;
     readonly forPeriods: number;
@@ -41,7 +44,8 @@ export class AwsMetricAlertConstruct<Namespace extends string> extends Construct
   constructor(scope: Construct, id: string, config: AwsMetricAlert<Namespace>, notifier: string) {
     super(scope, id);
     const {
-      aggregate: { overSeconds, type: aggregateType }, critical, metricName, metricNamespace,
+      aggregate: { overSeconds, type: aggregateType }, critical,
+      metric: { dimensions: metricDimensions, name: metricName, namespace: metricNamespace },
       name, namespace, tags, watch: { forPeriods, operator }, warning,
     } = config;
     const cleanName = paramCase(`${namespace}-${name}`);
@@ -56,9 +60,10 @@ export class AwsMetricAlertConstruct<Namespace extends string> extends Construct
         name: `${cleanName}-${setupName}`,
       });
       new CloudwatchMetricAlarm(this, `${setupName}-monitor`, {
-        alarmName: name,
+        alarmName: `${name}-${setupName}`,
         metricName,
         namespace: metricNamespace,
+        dimensions: metricDimensions,
         comparisonOperator: comparisonOperatorMap[operator],
         evaluationPeriods: forPeriods,
         period: overSeconds,
