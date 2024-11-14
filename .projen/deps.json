@@ -82,6 +82,11 @@
       "type": "runtime"
     },
     {
+      "name": "change-case",
+      "version": "~4",
+      "type": "runtime"
+    },
+    {
       "name": "constructs",
       "version": "~10",
       "type": "runtime"

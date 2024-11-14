@@ -46,6 +46,7 @@
   "dependencies": {
     "@cdktf/provider-datadog": "~10",
     "@rlmartin-projen/cdktf-project": "~4",
+    "change-case": "~4",
     "constructs": "~10"
   },
   "main": "lib/index.js",

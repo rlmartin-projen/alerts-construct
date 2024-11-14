@@ -22,6 +22,7 @@ const project = new typescript.TypeScriptProject({
   deps: [
     '@cdktf/provider-datadog@~10',
     '@rlmartin-projen/cdktf-project@~4',
+    'change-case@~4',
     'constructs@~10',
   ],
   // description: undefined,  /* The description is just a string that helps people understand the purpose of the package. */
