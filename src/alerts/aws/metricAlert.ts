@@ -50,10 +50,10 @@ export class AwsMetricAlertConstruct<Namespace extends string> extends Construct
     } = config;
     const cleanName = paramCase(`${namespace}-${name}`);
 
-    const setups = {
+    const setups: { [key: string]: number } = JSON.parse(JSON.stringify({
       critical,
       warning,
-    };
+    }));
 
     Object.entries(setups).forEach(([setupName, threshold]) => {
       const topic = new SnsTopic(this, `${setupName}-topic`, {
