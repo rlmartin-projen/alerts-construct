@@ -1,6 +1,8 @@
 import { Monitor } from '@cdktf/provider-datadog/lib/monitor';
 import { Construct } from 'constructs';
 import { DatadogMonitorType, severityToDatadogPriority, transformTags } from '.';
+import { toDatadogNotifier } from './helper';
+import { DefinedNotifier } from '../../notifiers';
 import { Alert } from '../../types';
 
 export interface DatadogMonitorAlert<Namespace extends string> extends Alert<Namespace> {
@@ -8,8 +10,19 @@ export interface DatadogMonitorAlert<Namespace extends string> extends Alert<Nam
   readonly query: string;
 }
 
-export class DatadogMonitorAlertConstruct<Namespace extends string> extends Construct {
-  constructor(scope: Construct, id: string, config: DatadogMonitorAlert<Namespace>, notifier: string, monitorType: DatadogMonitorType) {
+export class DatadogMonitorAlertConstruct<
+  Namespace extends string,
+  Environments,
+  Teams extends string,
+  NotifierType
+> extends Construct {
+  constructor(
+    scope: Construct,
+    id: string,
+    config: DatadogMonitorAlert<Namespace>,
+    notifier: DefinedNotifier<Environments, Teams, NotifierType>,
+    monitorType: DatadogMonitorType,
+  ) {
     super(scope, id);
     const {
       critical,
@@ -17,9 +30,11 @@ export class DatadogMonitorAlertConstruct<Namespace extends string> extends Cons
       name, query, severity, tags, warning,
     } = config;
 
+    const datadogNotifier = toDatadogNotifier(notifier, this, 'TODO');
+
     new Monitor(this, 'monitor', {
       query,
-      message: `${message}\nNotify: @webhook-${notifier}`,
+      message: `${message}\nNotify: ${datadogNotifier}`,
       name,
       type: monitorType,
       monitorThresholds: {
