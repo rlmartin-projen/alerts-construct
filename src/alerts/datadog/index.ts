@@ -15,6 +15,7 @@ export function transformTags(tags: { [key: string]: string } | undefined): stri
   return tags ? Object.entries(tags).map(([name, value]) => `${name}:${value}`) : undefined;
 }
 
+export * as helper from './helper';
 export * as log from './logAlert';
 export * as metric from './metricAlert';
 export * as monitor from './monitorAlert';

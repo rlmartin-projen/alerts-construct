@@ -1,5 +1,6 @@
 import { TaggedConstructConfig } from '@rlmartin-projen/cdktf-project/lib/constructs/aws/taggedConstruct';
 import { Construct } from 'constructs';
+import { WithNotifierMetadata } from './notifiers';
 
 export type Severity = 'SEV0' | 'SEV1' | 'SEV2' | 'SEV3' | 'SEV4';
 
@@ -42,10 +43,10 @@ export interface MonitoringConfig<
   readonly alerts: Alerts<Implementations>;
 }
 
-export interface AlertConstruct<T, Notifier> {
-  new (scope: Construct, id: string, config: T, notifier: Notifier): Construct;
+export interface AlertConstruct<T, Teams, Environments, Notifier> {
+  new (scope: Construct, id: string, config: T, notifier: string | (Notifier & WithNotifierMetadata<Environments, Teams>)): Construct;
 }
 
-export type AlertConstructors<T, Notifier> = { [K in keyof T]: AlertConstruct<T[K], Notifier> }
+export type AlertConstructors<T, Teams, Environments, Notifier> = { [K in keyof T]: AlertConstruct<T[K], Teams, Environments, Notifier> }
 
 export type Alerts<T> = { [K in keyof T]?: T[K][] }

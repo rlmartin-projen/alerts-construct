@@ -1,8 +1,8 @@
 import { CloudwatchMetricAlarm } from '@cdktf/provider-aws/lib/cloudwatch-metric-alarm';
-import { SnsTopic } from '@cdktf/provider-aws/lib/sns-topic';
-import { SnsTopicSubscription } from '@cdktf/provider-aws/lib/sns-topic-subscription';
 import { paramCase } from 'change-case';
 import { Construct } from 'constructs';
+import { toSnsNotifier } from './helper';
+import { DefinedNotifier } from '../../notifiers';
 import { Alert } from '../../types';
 
 export type ComparisonOperator = '>' | '>=' | '<' | '<=';
@@ -40,8 +40,8 @@ export interface AwsMetricAlert<Namespace extends string> extends Alert<Namespac
   };
 }
 
-export class AwsMetricAlertConstruct<Namespace extends string> extends Construct {
-  constructor(scope: Construct, id: string, config: AwsMetricAlert<Namespace>, notifier: string) {
+export class AwsMetricAlertConstruct<Namespace extends string, Environments, Teams extends string> extends Construct {
+  constructor(scope: Construct, id: string, config: AwsMetricAlert<Namespace>, notifier: DefinedNotifier<Environments, Teams>) {
     super(scope, id);
     const {
       aggregate: { overSeconds, type: aggregateType }, critical,
@@ -55,10 +55,9 @@ export class AwsMetricAlertConstruct<Namespace extends string> extends Construct
       warning,
     }));
 
+    const snsNotifier = toSnsNotifier(notifier, this, cleanName);
+
     Object.entries(setups).forEach(([setupName, threshold]) => {
-      const topic = new SnsTopic(this, `${setupName}-topic`, {
-        name: `${cleanName}-${setupName}`,
-      });
       new CloudwatchMetricAlarm(this, `${setupName}-monitor`, {
         alarmName: `${name}-${setupName}`,
         metricName,
@@ -70,14 +69,9 @@ export class AwsMetricAlertConstruct<Namespace extends string> extends Construct
         statistic: aggregateType.startsWith('p') ? undefined : aggregateType,
         extendedStatistic: aggregateType.startsWith('p') ? aggregateType : undefined,
         threshold,
-        alarmActions: [topic.arn],
-        okActions: [topic.arn],
+        alarmActions: [snsNotifier.arn],
+        okActions: [snsNotifier.arn],
         tags,
-      });
-      new SnsTopicSubscription(this, `${setupName}-subscription`, {
-        protocol: 'https',
-        endpoint: notifier,
-        topicArn: topic.arn,
       });
     });
   }
