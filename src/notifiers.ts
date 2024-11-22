@@ -1,6 +1,8 @@
-export interface WithNotifierMetadata<Environments, Team, NotifierType> {
+import { NotificationEndpoints } from './types';
+
+export interface WithNotifierMetadata<Environments, Team> {
   readonly env: Environments;
-  readonly notifierType: NotifierType;
+  readonly notifierType: keyof NotificationEndpoints<any>;
   readonly team: Team;
 }
 
@@ -36,9 +38,9 @@ export function isSnsNotifier(notifier: any): notifier is SnsNotifier {
   ;
 }
 
-export type DefinedNotifier<Environments, Teams, NotifierType> =
+export type DefinedNotifier<Environments, Teams> =
   string
   | (
     (DatadogWebhookNotifier | SnsNotifier | ZendutyWebhookNotifier)
-    & WithNotifierMetadata<Environments, Teams, NotifierType>
+    & WithNotifierMetadata<Environments, Teams>
   );

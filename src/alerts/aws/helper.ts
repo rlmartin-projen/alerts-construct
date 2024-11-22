@@ -4,8 +4,8 @@ import { Construct } from 'constructs';
 import { DefinedNotifier, isSnsNotifier, isWebhookNotifier, SnsNotifier } from '../../notifiers';
 import { NotificationEndpoints, TeamNotificationMap } from '../../types';
 
-export function toSnsNotifier<Environments, Teams extends string, NotifierType>(
-  notifier: DefinedNotifier<Environments, Teams, NotifierType>, scope: Construct, name: string,
+export function toSnsNotifier<Environments, Teams extends string>(
+  notifier: DefinedNotifier<Environments, Teams>, scope: Construct, name: string,
 ): SnsNotifier {
   if (isSnsNotifier(notifier)) return notifier;
   const topic = new SnsTopic(scope, `${name}-topic`, {

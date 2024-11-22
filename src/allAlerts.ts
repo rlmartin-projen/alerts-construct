@@ -10,7 +10,7 @@ export abstract class AllAlerts<
   Environments,
   Notifier extends string | object,
 > extends TaggedConstruct {
-  protected abstract alertConstructors: AlertConstructors<Implementations, Notifier>;
+  protected abstract alertConstructors: AlertConstructors<Implementations, Teams, Environments, Notifier>;
   protected abstract severityMap: Record<Severity, keyof NotificationEndpoints<Notifier>>;
   protected env: keyof Environments;
   protected teamNotifications: TeamNotificationMap<Teams, Notifier>;
@@ -28,7 +28,9 @@ export abstract class AllAlerts<
       // Pull the appropriate constructor for the alert type.
       const ctor = this.alertConstructors[at] as AlertConstruct<
         Implementations[typeof at],
-        string | (Notifier & WithNotifierMetadata<Environments, Teams, keyof NotificationEndpoints<Notifier>>)
+        Teams,
+        Environments,
+        string | (Notifier & WithNotifierMetadata<Environments, Teams>)
       >;
 
       // Iterate alerts that use the same constructor to build a
@@ -47,7 +49,7 @@ export abstract class AllAlerts<
 
   getNotifier(
     alert: Alert<Namespace> & WithOwner<Teams>,
-  ): string | (Notifier & WithNotifierMetadata<Environments, Teams, keyof NotificationEndpoints<Notifier>>) {
+  ): string | (Notifier & WithNotifierMetadata<Environments, Teams>) {
     const notifierType = this.severityMap[alert.severity];
     const notifier = this.teamNotifications[alert.owner][notifierType];
     if (isString(notifier)) return notifier;
@@ -56,7 +58,7 @@ export abstract class AllAlerts<
       env: this.env,
       notifierType,
       team: alert.owner,
-    } as Notifier & WithNotifierMetadata<Environments, Teams, keyof NotificationEndpoints<Notifier>>;
+    } as Notifier & WithNotifierMetadata<Environments, Teams>;
   }
 }
 

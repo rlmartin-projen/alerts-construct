@@ -14,13 +14,12 @@ export class DatadogMonitorAlertConstruct<
   Namespace extends string,
   Environments,
   Teams extends string,
-  NotifierType
 > extends Construct {
   constructor(
     scope: Construct,
     id: string,
     config: DatadogMonitorAlert<Namespace>,
-    notifier: DefinedNotifier<Environments, Teams, NotifierType>,
+    notifier: DefinedNotifier<Environments, Teams>,
     monitorType: DatadogMonitorType,
   ) {
     super(scope, id);

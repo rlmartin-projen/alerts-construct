@@ -40,8 +40,8 @@ export interface AwsMetricAlert<Namespace extends string> extends Alert<Namespac
   };
 }
 
-export class AwsMetricAlertConstruct<Namespace extends string, Environments, Teams extends string, NotifierType> extends Construct {
-  constructor(scope: Construct, id: string, config: AwsMetricAlert<Namespace>, notifier: DefinedNotifier<Environments, Teams, NotifierType>) {
+export class AwsMetricAlertConstruct<Namespace extends string, Environments, Teams extends string> extends Construct {
+  constructor(scope: Construct, id: string, config: AwsMetricAlert<Namespace>, notifier: DefinedNotifier<Environments, Teams>) {
     super(scope, id);
     const {
       aggregate: { overSeconds, type: aggregateType }, critical,

@@ -3,8 +3,8 @@ import { paramCase } from 'change-case';
 import { Construct } from 'constructs';
 import { DefinedNotifier, isSnsNotifier, isWebhookNotifier, WithNotifierMetadata, ZendutyWebhookNotifier } from '../../notifiers';
 
-export function toDatadogNotifier<Environments, Teams, NotifierType>(
-  notifier: DefinedNotifier<Environments, Teams, NotifierType>,
+export function toDatadogNotifier<Environments, Teams>(
+  notifier: DefinedNotifier<Environments, Teams>,
   scope: Construct,
   name: string,
 ): string {
@@ -37,8 +37,8 @@ const ZENDUTY_WEBHOOK_JSON_PAYLOAD = JSON.stringify({
   priority: '$ALERT_PRIORITY',
 });
 
-function createZendutyWebhook<Environments, Teams, NotifierType>(
-  webhook: ZendutyWebhookNotifier & WithNotifierMetadata<Environments, Teams, NotifierType>,
+function createZendutyWebhook<Environments, Teams>(
+  webhook: ZendutyWebhookNotifier & WithNotifierMetadata<Environments, Teams>,
   scope: Construct, name: string,
 ): Webhook {
   return new Webhook(scope, name, {
