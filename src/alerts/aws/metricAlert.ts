@@ -17,23 +17,25 @@ type AwsAlarmComparisonOperator =
   | 'LessThanOrEqualToThreshold'
   | 'LessThanThreshold'
 ;
-const comparisonOperatorMap: Record<ComparisonOperator, AwsAlarmComparisonOperator> = {
+export const comparisonOperatorMap: Record<ComparisonOperator, AwsAlarmComparisonOperator> = {
   '<': 'LessThanThreshold',
   '<=': 'LessThanOrEqualToThreshold',
   '>': 'GreaterThanThreshold',
   '>=': 'GreaterThanOrEqualToThreshold',
 };
 
-export interface AwsMetricAlert<Namespace extends string> extends Alert<Namespace> {
+export interface AwsMetric {
+  readonly name: string;
+  readonly namespace: string;
+  readonly dimensions?: { [key: string]: string };
   readonly aggregate: {
-    readonly overSeconds?: AllowedSeconds;
+    readonly overSeconds: AllowedSeconds;
     readonly type: AggregateType;
   };
-  readonly metric: {
-    readonly name: string;
-    readonly namespace?: string;
-    readonly dimensions?: { [key: string]: string };
-  };
+}
+
+export interface AwsMetricAlert<Namespace extends string> extends Alert<Namespace> {
+  readonly metric: AwsMetric;
   readonly watch: {
     readonly operator: ComparisonOperator;
     readonly forPeriods: number;
@@ -44,8 +46,8 @@ export class AwsMetricAlertConstruct<Namespace extends string, Environments, Tea
   constructor(scope: Construct, id: string, config: AwsMetricAlert<Namespace>, notifier: DefinedNotifier<Environments, Teams>) {
     super(scope, id);
     const {
-      aggregate: { overSeconds, type: aggregateType }, critical,
-      metric: { dimensions: metricDimensions, name: metricName, namespace: metricNamespace },
+      critical,
+      metric: { aggregate: { overSeconds, type: aggregateType }, dimensions: metricDimensions, name: metricName, namespace: metricNamespace },
       name, namespace, tags, watch: { forPeriods, operator }, warning,
     } = config;
     const cleanName = paramCase(`${namespace}-${name}`);
