@@ -3,12 +3,13 @@ import { paramCase } from 'change-case';
 import { Construct } from 'constructs';
 import { toSnsNotifier } from './helper';
 import { AwsMetric, ComparisonOperator, comparisonOperatorMap } from './metricAlert';
+import { compact } from '../../helpers';
 import { DefinedNotifier } from '../../notifiers';
 import { Alert } from '../../types';
 
 export interface AwsMetricQueryAlert<Namespace extends string> extends Alert<Namespace> {
   readonly equation: string;
-  readonly metrics: { [key: string]: AwsMetric };
+  readonly metrics: { [key: string]: AwsMetric | undefined };
   readonly watch: {
     readonly operator: ComparisonOperator;
     readonly forPeriods: number;
@@ -44,8 +45,8 @@ export class AwsMetricQueryAlertConstruct<Namespace extends string, Environments
             label: description,
             returnData: true,
           },
-          ...Object.entries(metrics).map(([metricName, metric]) => {
-            return {
+          ...compact(Object.entries(metrics).map(([metricName, metric]) => {
+            return metric ? {
               id: metricName,
               metric: {
                 metricName: metric.name,
@@ -54,8 +55,8 @@ export class AwsMetricQueryAlertConstruct<Namespace extends string, Environments
                 stat: metric.aggregate.type,
                 dimensions: metric.dimensions,
               },
-            };
-          }),
+            } : undefined;
+          })),
         ],
         threshold,
         alarmActions: [snsNotifier.arn],
