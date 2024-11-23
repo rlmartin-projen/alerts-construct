@@ -8,7 +8,6 @@ import { Alert } from '../../types';
 
 export interface AwsMetricQueryAlert<Namespace extends string> extends Alert<Namespace> {
   readonly equation: string;
-  readonly description?: string;
   readonly metrics: { [key: string]: AwsMetric };
   readonly watch: {
     readonly operator: ComparisonOperator;
@@ -35,6 +34,7 @@ export class AwsMetricQueryAlertConstruct<Namespace extends string, Environments
     Object.entries(setups).forEach(([setupName, threshold]) => {
       new CloudwatchMetricAlarm(this, `${setupName}-monitor`, {
         alarmName: `${name}-${setupName}`,
+        alarmDescription: description,
         comparisonOperator: comparisonOperatorMap[operator],
         evaluationPeriods: forPeriods,
         metricQuery: [

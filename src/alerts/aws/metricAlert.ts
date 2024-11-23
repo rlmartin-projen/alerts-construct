@@ -46,7 +46,7 @@ export class AwsMetricAlertConstruct<Namespace extends string, Environments, Tea
   constructor(scope: Construct, id: string, config: AwsMetricAlert<Namespace>, notifier: DefinedNotifier<Environments, Teams>) {
     super(scope, id);
     const {
-      critical,
+      critical, description,
       metric: { aggregate: { overSeconds, type: aggregateType }, dimensions: metricDimensions, name: metricName, namespace: metricNamespace },
       name, namespace, tags, watch: { forPeriods, operator }, warning,
     } = config;
@@ -62,6 +62,7 @@ export class AwsMetricAlertConstruct<Namespace extends string, Environments, Tea
     Object.entries(setups).forEach(([setupName, threshold]) => {
       new CloudwatchMetricAlarm(this, `${setupName}-monitor`, {
         alarmName: `${name}-${setupName}`,
+        alarmDescription: description,
         metricName,
         namespace: metricNamespace,
         dimensions: metricDimensions,

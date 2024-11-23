@@ -17,6 +17,7 @@ export type TeamNotificationMap<Teams extends string, Notifier> = { [key in Team
 export interface Alert<Namespace extends string> {
   readonly name: string;
   readonly namespace?: Namespace;
+  readonly description?: string;
   readonly critical: number;
   readonly warning?: number;
   readonly severity: Severity;

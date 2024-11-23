@@ -24,7 +24,7 @@ export class DatadogMonitorAlertConstruct<
   ) {
     super(scope, id);
     const {
-      critical,
+      critical, description,
       message = 'An error occured in {{log.service}}\n\n{{log.message}}',
       name, query, severity, tags, warning,
     } = config;
@@ -33,7 +33,7 @@ export class DatadogMonitorAlertConstruct<
 
     new Monitor(this, 'monitor', {
       query,
-      message: `${message}\nNotify: ${datadogNotifier}`,
+      message: `${description ? 'Monitor [' + description + ']:\n\n' : ''}${message}\nNotify: ${datadogNotifier}`,
       name,
       type: monitorType,
       monitorThresholds: {
