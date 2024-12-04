@@ -1,5 +1,5 @@
 import { Construct } from 'constructs';
-import { LogsToMetric } from './logsToMetric';
+import { AnyPattern, LogsToMetric } from './logsToMetric';
 import { AwsMetric, AwsMetricAlert, AwsMetricAlertConstruct } from './metricAlert';
 import { DefinedNotifier } from '../../notifiers';
 
@@ -9,7 +9,7 @@ export interface AwsLogAlert<Namespace extends string> extends AwsMetricAlert<Na
    *
    * @see https://docs.aws.amazon.com/AmazonCloudWatch/latest/logs/FilterAndPatternSyntax.html
    */
-  readonly pattern: string;
+  readonly pattern: string | AnyPattern | RegExp;
   readonly metric: AwsMetric & {
     readonly createDimensions?: { [key: string]: string };
   };
