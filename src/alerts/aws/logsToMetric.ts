@@ -38,7 +38,7 @@ export class LogsToMetric extends TaggedConstruct {
     if (isRegExp(pattern)) {
       patternString = pattern.toString();
       if (pattern.flags != '') {
-        patternString = patternString.replace(`${pattern.flags}$`, '');
+        patternString = patternString.replace(new RegExp(`${pattern.flags}$`), '');
         console.log('WARNING: AWS log patterns do not support flags.');
       }
       patternString = patternString.replace(/^\//, '%').replace(/\/$/, '%');
