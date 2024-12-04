@@ -4,10 +4,10 @@ import { Construct } from 'constructs';
 import { AwsMetric } from './metricAlert';
 
 export interface LogsToMetricConfig extends TaggedConstructConfig {
+  readonly name: string;
   readonly pattern: string;
   readonly metric: AwsMetric;
   readonly logGroupName: string;
-  readonly nameSuffix?: string;
   readonly value?: string;
 }
 
@@ -18,13 +18,13 @@ export class LogsToMetric extends TaggedConstruct {
 
   constructor(scope: Construct, id: string, config: LogsToMetricConfig) {
     super(scope, id, config);
-    const { logGroupName, pattern, metric: { dimensions, name, namespace }, nameSuffix, value } = config;
+    const { logGroupName, pattern, metric: { dimensions, name, namespace }, name: filterName, value } = config;
     this._name = name;
     this._namespace = namespace;
     this._dimensions = Object.keys(dimensions ?? {});
 
     new CloudwatchLogMetricFilter(this, 'metric-filter', {
-      name: `${namespace}-${name}${nameSuffix ? '-' + nameSuffix : ''}`,
+      name: filterName,
       pattern,
       logGroupName,
       metricTransformation: {
