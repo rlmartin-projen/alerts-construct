@@ -33,7 +33,7 @@ export class LogsToMetric extends TaggedConstruct {
     this._namespace = namespace;
     this._dimensions = Object.keys(dimensions ?? {});
 
-    let patternString = pattern.toString()
+    let patternString = pattern.toString();
     if (isAny(pattern)) patternString = `?${pattern.any.join(' ?')}`;
     if (isRegExp(pattern)) {
       if (pattern.flags != '') console.warn('AWS log patterns do not support flags.');
