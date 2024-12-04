@@ -3,9 +3,19 @@ import { TaggedConstruct, TaggedConstructConfig } from '@rlmartin-projen/cdktf-p
 import { Construct } from 'constructs';
 import { AwsMetric } from './metricAlert';
 
+export interface AnyPattern {
+  readonly any: string[];
+}
+function isAny(pattern: any): pattern is AnyPattern {
+  return (pattern as AnyPattern).any !== undefined;
+}
+function isRegExp(pattern: any): pattern is RegExp {
+  return (pattern as RegExp).source !== undefined && (pattern as RegExp).flags !== undefined;
+}
+
 export interface LogsToMetricConfig extends TaggedConstructConfig {
   readonly name: string;
-  readonly pattern: string;
+  readonly pattern: string | AnyPattern | RegExp;
   readonly metric: AwsMetric;
   readonly logGroupName: string;
   readonly value?: string;
@@ -23,9 +33,17 @@ export class LogsToMetric extends TaggedConstruct {
     this._namespace = namespace;
     this._dimensions = Object.keys(dimensions ?? {});
 
+    let patternString = pattern.toString()
+    if (isAny(pattern)) patternString = `?${pattern.any.join(' ?')}`;
+    if (isRegExp(pattern)) {
+      if (pattern.flags != '') console.warn('AWS log patterns do not support flags.');
+      patternString = pattern.toString().replace(/^\//, '%').replace('/\/$', '%');
+      if (patternString.includes('(') && patternString.includes(')')) console.warn('AWS log patterns do not support subpatterns');
+    }
+
     new CloudwatchLogMetricFilter(this, 'metric-filter', {
       name: filterName,
-      pattern,
+      pattern: patternString,
       logGroupName,
       metricTransformation: {
         name,
