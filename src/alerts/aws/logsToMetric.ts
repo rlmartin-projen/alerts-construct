@@ -36,9 +36,13 @@ export class LogsToMetric extends TaggedConstruct {
     let patternString = pattern.toString();
     if (isAny(pattern)) patternString = `?${pattern.any.join(' ?')}`;
     if (isRegExp(pattern)) {
-      if (pattern.flags != '') console.warn('AWS log patterns do not support flags.');
-      patternString = pattern.toString().replace(/^\//, '%').replace('/\/$', '%');
-      if (patternString.includes('(') && patternString.includes(')')) console.warn('AWS log patterns do not support subpatterns');
+      patternString = pattern.toString();
+      if (pattern.flags != '') {
+        patternString = patternString.replace(`${pattern.flags}$`, '');
+        console.log('WARNING: AWS log patterns do not support flags.');
+      }
+      patternString = patternString.replace(/^\//, '%').replace('/\/$', '%');
+      if (patternString.includes('(') && patternString.includes(')')) console.log('WARNING: AWS log patterns do not support subpatterns');
     }
 
     new CloudwatchLogMetricFilter(this, 'metric-filter', {
