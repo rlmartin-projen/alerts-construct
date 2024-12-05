@@ -19,6 +19,7 @@ export interface LogsToMetricConfig extends TaggedConstructConfig {
   readonly metric: AwsMetric;
   readonly logGroupName: string;
   readonly value?: string;
+  readonly defaultValue?: string;
 }
 
 export class LogsToMetric extends TaggedConstruct {
@@ -28,7 +29,7 @@ export class LogsToMetric extends TaggedConstruct {
 
   constructor(scope: Construct, id: string, config: LogsToMetricConfig) {
     super(scope, id, config);
-    const { logGroupName, pattern, metric: { dimensions, name, namespace }, name: filterName, value } = config;
+    const { defaultValue, logGroupName, pattern, metric: { dimensions, name, namespace }, name: filterName, value } = config;
     this._name = name;
     this._namespace = namespace;
     this._dimensions = Object.keys(dimensions ?? {});
@@ -62,6 +63,7 @@ export class LogsToMetric extends TaggedConstruct {
         namespace,
         dimensions,
         value: value ?? '1',
+        defaultValue,
       },
     });
   }

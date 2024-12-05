@@ -14,6 +14,8 @@ export interface AwsLogAlert<Namespace extends string> extends AwsMetricAlert<Na
     readonly createDimensions?: { [key: string]: string };
   };
   readonly logGroupName: string;
+  readonly value?: string;
+  readonly defaultValue?: string;
 }
 
 export class AwsLogAlertConstruct<
@@ -23,7 +25,7 @@ export class AwsLogAlertConstruct<
 > extends AwsMetricAlertConstruct<Namespace, Environments, Teams> {
   constructor(scope: Construct, id: string, config: AwsLogAlert<Namespace>, notifier: DefinedNotifier<Environments, Teams>) {
     super(scope, id, config, notifier);
-    const { logGroupName, metric, name, pattern, tags } = config;
+    const { defaultValue, logGroupName, metric, name, pattern, tags, value } = config;
 
     new LogsToMetric(this, 'metric', {
       name,
@@ -33,6 +35,8 @@ export class AwsLogAlertConstruct<
         ...metric,
         dimensions: metric.createDimensions,
       },
+      value,
+      defaultValue,
       tags,
     });
   }
