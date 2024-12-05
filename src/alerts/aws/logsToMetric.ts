@@ -44,7 +44,7 @@ export class LogsToMetric extends TaggedConstruct {
       patternString = patternString.replace(/^\//, '%').replace(/\/$/, '%');
       if (patternString.includes('(') && patternString.includes(')')) console.log('WARNING: AWS log patterns do not support subpatterns');
     }
-    patternString = patternString.trim()
+    patternString = patternString.trim();
     // See https://github.com/hashicorp/terraform-provider-aws/issues/28881#issuecomment-1435975827
     if (this._dimensions.length > 0) {
       if (
