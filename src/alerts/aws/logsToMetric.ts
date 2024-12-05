@@ -44,6 +44,14 @@ export class LogsToMetric extends TaggedConstruct {
       patternString = patternString.replace(/^\//, '%').replace(/\/$/, '%');
       if (patternString.includes('(') && patternString.includes(')')) console.log('WARNING: AWS log patterns do not support subpatterns');
     }
+    patternString = patternString.trim()
+    // See https://github.com/hashicorp/terraform-provider-aws/issues/28881#issuecomment-1435975827
+    if (this._dimensions.length > 0) {
+      if (
+        !(patternString.startsWith('{') && patternString.endsWith('}'))
+        && !(patternString.startsWith('[') && patternString.endsWith(']'))
+      ) throw new Error('Only JSON and space-delimited log patterns allow dimensions');
+    }
 
     new CloudwatchLogMetricFilter(this, 'metric-filter', {
       name: filterName,
