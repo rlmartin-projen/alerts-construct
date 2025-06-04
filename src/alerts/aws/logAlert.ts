@@ -21,7 +21,7 @@ export interface AwsLogAlert<Namespace extends string> extends AwsMetricAlert<Na
 export class AwsLogAlertConstruct<
   Namespace extends string,
   Environments,
-  Teams extends string
+  Teams extends string,
 > extends AwsMetricAlertConstruct<Namespace, Environments, Teams> {
   constructor(scope: Construct, id: string, config: AwsLogAlert<Namespace>, notifier: DefinedNotifier<Environments, Teams>) {
     super(scope, id, config, notifier);
