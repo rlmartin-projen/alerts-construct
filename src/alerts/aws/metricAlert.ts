@@ -46,7 +46,7 @@ export class AwsMetricAlertConstruct<Namespace extends string, Environments, Tea
   constructor(scope: Construct, id: string, config: AwsMetricAlert<Namespace>, notifier: DefinedNotifier<Environments, Teams>) {
     super(scope, id);
     const {
-      critical, description,
+      autoClose = true, critical, description,
       metric: { aggregate: { overSeconds, type: aggregateType }, dimensions: metricDimensions, name: metricName, namespace: metricNamespace },
       name, namespace, tags, watch: { forPeriods, operator }, warning,
     } = config;
@@ -73,7 +73,7 @@ export class AwsMetricAlertConstruct<Namespace extends string, Environments, Tea
         extendedStatistic: aggregateType.startsWith('p') ? aggregateType : undefined,
         threshold,
         alarmActions: [snsNotifier.arn],
-        okActions: [snsNotifier.arn],
+        okActions: autoClose ? [snsNotifier.arn] : undefined,
         tags,
       });
     });

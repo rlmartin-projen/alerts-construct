@@ -20,7 +20,7 @@ export class AwsMetricQueryAlertConstruct<Namespace extends string, Environments
   constructor(scope: Construct, id: string, config: AwsMetricQueryAlert<Namespace>, notifier: DefinedNotifier<Environments, Teams>) {
     super(scope, id);
     const {
-      critical, description, equation, metrics,
+      autoClose = true, critical, description, equation, metrics,
       name, namespace, tags, watch: { forPeriods, operator }, warning,
     } = config;
     const cleanName = paramCase(`${namespace}-${name}`);
@@ -60,7 +60,7 @@ export class AwsMetricQueryAlertConstruct<Namespace extends string, Environments
         ],
         threshold,
         alarmActions: [snsNotifier.arn],
-        okActions: [snsNotifier.arn],
+        okActions: autoClose ? [snsNotifier.arn] : undefined,
         tags,
       });
     });

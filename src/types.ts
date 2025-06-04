@@ -21,6 +21,7 @@ export interface Alert<Namespace extends string> {
   readonly critical: number;
   readonly warning?: number;
   readonly severity: Severity;
+  readonly autoClose?: boolean;
   readonly tags?: { [key: string]: string };
 }
 export interface WithOwner<Teams> {
