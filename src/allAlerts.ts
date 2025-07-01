@@ -41,7 +41,7 @@ export abstract class AllAlerts<
       (alerts[at] ?? []).forEach(alertConfig => {
         const alertWithOverrides = this.envOverrides(alertConfig);
         const { name, tags: alertTags } = alertWithOverrides;
-        return new ctor(this, `${String(at)}-${name}`, { ...alertWithOverrides, tags: { ...allTags, ...alertTags } }, this.getNotifier(alertWithOverrides), this.getNotifier(alertWithOverrides, true));
+        return new ctor(this, `${String(at)}-${name}`, this.env, { ...alertWithOverrides, tags: { ...allTags, ...alertTags } }, this.getNotifier(alertWithOverrides), this.getNotifier(alertWithOverrides, true));
       });
     });
   }

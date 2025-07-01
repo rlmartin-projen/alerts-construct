@@ -49,6 +49,7 @@ export interface AlertConstruct<T, Teams, Environments, Notifier> {
   new (
     scope: Construct,
     id: string,
+    env: keyof Environments,
     config: T,
     notifier: string | (Notifier & WithNotifierMetadata<Environments, Teams>),
     warningNotifier: string | (Notifier & WithNotifierMetadata<Environments, Teams>),

@@ -10,9 +10,10 @@ export class DatadogServiceAlertConstruct<
     scope: Construct,
     id: string,
     config: DatadogMonitorAlert<Namespace>,
+    env: keyof Environments,
     notifier: string,
     warningNotifier: string,
   ) {
-    super(scope, id, config, notifier, warningNotifier, 'service check');
+    super(scope, id, config, env, notifier, warningNotifier, 'service check');
   }
 }

@@ -19,6 +19,7 @@ export class DatadogMonitorAlertConstruct<
     scope: Construct,
     id: string,
     config: DatadogMonitorAlert<Namespace>,
+    _: keyof Environments,
     notifier: DefinedNotifier<Environments, Teams>,
     warningNotifier: DefinedNotifier<Environments, Teams>,
     monitorType: DatadogMonitorType,

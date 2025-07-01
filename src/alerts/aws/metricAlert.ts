@@ -47,6 +47,7 @@ export class AwsMetricAlertConstruct<Namespace extends string, Environments, Tea
     scope: Construct,
     id: string,
     config: AwsMetricAlert<Namespace>,
+    env: keyof Environments,
     notifier: DefinedNotifier<Environments, Teams>,
     warningNotifier: DefinedNotifier<Environments, Teams>,
   ) {
@@ -69,7 +70,7 @@ export class AwsMetricAlertConstruct<Namespace extends string, Environments, Tea
     Object.entries(setups).forEach(([setupName, threshold]) => {
       const snsNotifier = setupName === 'warning' ? snsWarningNotifier : snsCriticalNotifier;
       new CloudwatchMetricAlarm(this, `${setupName}-monitor`, {
-        alarmName: `${name}-${setupName}`,
+        alarmName: `${name}-${setupName}${String(env) === 'prod' ? '' : ('-' + String(env))}`,
         alarmDescription: description,
         metricName,
         namespace: metricNamespace,

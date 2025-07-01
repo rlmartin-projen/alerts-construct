@@ -11,10 +11,11 @@ export class DatadogLogAlertConstruct<
     scope: Construct,
     id: string,
     config: DatadogMonitorAlert<Namespace>,
+    env: keyof Environments,
     notifier: string,
     warningNotifier: string,
   ) {
-    super(scope, id, config, notifier, warningNotifier, 'log alert');
+    super(scope, id, config, env, notifier, warningNotifier, 'log alert');
   }
 }
 

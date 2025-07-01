@@ -21,6 +21,7 @@ export class AwsMetricQueryAlertConstruct<Namespace extends string, Environments
     scope: Construct,
     id: string,
     config: AwsMetricQueryAlert<Namespace>,
+    env: keyof Environments,
     notifier: DefinedNotifier<Environments, Teams>,
     warningNotifier: DefinedNotifier<Environments, Teams>,
   ) {
@@ -42,7 +43,7 @@ export class AwsMetricQueryAlertConstruct<Namespace extends string, Environments
     Object.entries(setups).forEach(([setupName, threshold]) => {
       const snsNotifier = setupName === 'warning' ? snsWarningNotifier : snsCriticalNotifier;
       new CloudwatchMetricAlarm(this, `${setupName}-monitor`, {
-        alarmName: `${name}-${setupName}`,
+        alarmName: `${name}-${setupName}${String(env) === 'prod' ? '' : ('-' + String(env))}`,
         alarmDescription: description,
         comparisonOperator: comparisonOperatorMap[operator],
         evaluationPeriods: forPeriods,
