@@ -11,7 +11,7 @@ export abstract class AllAlerts<
   Notifier extends string | object,
 > extends TaggedConstruct {
   protected abstract alertConstructors: AlertConstructors<Implementations, Teams, Environments, Notifier>;
-  protected abstract severityMap: Record<Severity, keyof NotificationEndpoints<Notifier>>;
+  protected abstract severityMap: Record<Severity, keyof NotificationEndpoints<Notifier> | [keyof NotificationEndpoints<Notifier>, keyof NotificationEndpoints<Notifier>]>;
   protected env: keyof Environments;
   protected teamNotifications: TeamNotificationMap<Teams, Notifier>;
 
@@ -49,8 +49,12 @@ export abstract class AllAlerts<
 
   getNotifier(
     alert: Alert<Namespace> & WithOwner<Teams>,
+    forWarning: boolean = false,
   ): string | (Notifier & WithNotifierMetadata<Environments, Teams>) {
-    const notifierType = this.severityMap[alert.severity];
+    const notifierTuple = this.severityMap[alert.severity];
+    const notifierType = Array.isArray(notifierTuple)
+      ? notifierTuple[forWarning ? 1: 0]
+      : notifierTuple;
     const notifier = this.teamNotifications[alert.owner][notifierType];
     if (isString(notifier)) return notifier;
     return {

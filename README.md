@@ -33,7 +33,7 @@ The type to be expected for the notifier config for the team.
 
 
 ### severityMap
-Set this private property to a map of severity to `lowPriority` or `highPriority`.
+Set this private property to a map of severity to `lowPriority` or `highPriority`. If there is a different destination for warnings, the mapped value can be a two-entry tuple in which the first value is for the `critical` threshold and the second value is for the `warning` threshold.
 
 
 ### envOverrides
@@ -65,11 +65,11 @@ export class MyAlerts extends AllAlerts<Teams, Namespace, ConvertInterfaceToDict
     };
   };
 
-  protected get severityMap(): Record<Severity, keyof NotificationEndpoints<string>> {
+  protected get severityMap(): Record<Severity, keyof NotificationEndpoints<string> | [keyof NotificationEndpoints<string>, keyof NotificationEndpoints<string>]> {
     return {
-      SEV0: 'highPriority',
-      SEV1: 'highPriority',
-      SEV2: 'highPriority',
+      SEV0: ['highPriority', 'lowPriority'],
+      SEV1: ['highPriority', 'lowPriority'],
+      SEV2: ['highPriority', 'lowPriority'],
       SEV3: 'lowPriority',
       SEV4: 'lowPriority',
     };
