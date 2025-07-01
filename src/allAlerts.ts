@@ -11,7 +11,10 @@ export abstract class AllAlerts<
   Notifier extends string | object,
 > extends TaggedConstruct {
   protected abstract alertConstructors: AlertConstructors<Implementations, Teams, Environments, Notifier>;
-  protected abstract severityMap: Record<Severity, keyof NotificationEndpoints<Notifier> | [keyof NotificationEndpoints<Notifier>, keyof NotificationEndpoints<Notifier>]>;
+  protected abstract severityMap: Record<
+    Severity,
+    keyof NotificationEndpoints<Notifier> | [keyof NotificationEndpoints<Notifier>, keyof NotificationEndpoints<Notifier>]
+  >;
   protected env: keyof Environments;
   protected teamNotifications: TeamNotificationMap<Teams, Notifier>;
 
