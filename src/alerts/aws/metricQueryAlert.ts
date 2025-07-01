@@ -7,7 +7,7 @@ import { compact } from '../../helpers';
 import { DefinedNotifier } from '../../notifiers';
 import { Alert } from '../../types';
 
-export interface AwsMetricQueryAlert<Namespace extends string> extends Alert<Namespace> {
+export interface AwsMetricQueryAlert<Namespace extends string, Environments> extends Alert<Namespace, Environments> {
   readonly equation: string;
   readonly metrics: { [key: string]: AwsMetric | undefined };
   readonly watch: {
@@ -20,7 +20,7 @@ export class AwsMetricQueryAlertConstruct<Namespace extends string, Environments
   constructor(
     scope: Construct,
     id: string,
-    config: AwsMetricQueryAlert<Namespace>,
+    config: AwsMetricQueryAlert<Namespace, Environments>,
     notifier: DefinedNotifier<Environments, Teams>,
     warningNotifier: DefinedNotifier<Environments, Teams>,
   ) {
