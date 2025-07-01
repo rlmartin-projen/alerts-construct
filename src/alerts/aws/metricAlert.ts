@@ -52,7 +52,7 @@ export class AwsMetricAlertConstruct<Namespace extends string, Environments, Tea
   ) {
     super(scope, id);
     const {
-      autoClose = true, critical, description, env,
+      autoClose = true, critical, description,
       metric: { aggregate: { overSeconds, type: aggregateType }, dimensions: metricDimensions, name: metricName, namespace: metricNamespace },
       name, namespace, tags, watch: { forPeriods, operator }, warning,
     } = config;
@@ -69,7 +69,7 @@ export class AwsMetricAlertConstruct<Namespace extends string, Environments, Tea
     Object.entries(setups).forEach(([setupName, threshold]) => {
       const snsNotifier = setupName === 'warning' ? snsWarningNotifier : snsCriticalNotifier;
       new CloudwatchMetricAlarm(this, `${setupName}-monitor`, {
-        alarmName: `${name}-${setupName}${String(env) === 'prod' ? '' : ('-' + String(env))}`,
+        alarmName: `${name}-${setupName}`,
         alarmDescription: description,
         metricName,
         namespace: metricNamespace,
