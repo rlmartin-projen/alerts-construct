@@ -11,7 +11,10 @@ export abstract class AllAlerts<
   Notifier extends string | object,
 > extends TaggedConstruct {
   protected abstract alertConstructors: AlertConstructors<Implementations, Teams, Environments, Notifier>;
-  protected abstract severityMap: Record<Severity, keyof NotificationEndpoints<Notifier> | [keyof NotificationEndpoints<Notifier>, keyof NotificationEndpoints<Notifier>]>;
+  protected abstract severityMap: Record<
+    Severity,
+    keyof NotificationEndpoints<Notifier> | [keyof NotificationEndpoints<Notifier>, keyof NotificationEndpoints<Notifier>]
+  >;
   protected env: keyof Environments;
   protected teamNotifications: TeamNotificationMap<Teams, Notifier>;
 
@@ -38,7 +41,7 @@ export abstract class AllAlerts<
       (alerts[at] ?? []).forEach(alertConfig => {
         const alertWithOverrides = this.envOverrides(alertConfig);
         const { name, tags: alertTags } = alertWithOverrides;
-        return new ctor(this, `${String(at)}-${name}`, { ...alertWithOverrides, tags: { ...allTags, ...alertTags } }, this.getNotifier(alertWithOverrides));
+        return new ctor(this, `${String(at)}-${name}`, { ...alertWithOverrides, tags: { ...allTags, ...alertTags } }, this.env, this.getNotifier(alertWithOverrides), this.getNotifier(alertWithOverrides, true));
       });
     });
   }

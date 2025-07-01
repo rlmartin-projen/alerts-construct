@@ -23,8 +23,15 @@ export class AwsLogAlertConstruct<
   Environments,
   Teams extends string,
 > extends AwsMetricAlertConstruct<Namespace, Environments, Teams> {
-  constructor(scope: Construct, id: string, config: AwsLogAlert<Namespace>, notifier: DefinedNotifier<Environments, Teams>) {
-    super(scope, id, config, notifier);
+  constructor(
+    scope: Construct,
+    id: string,
+    config: AwsLogAlert<Namespace>,
+    env: keyof Environments,
+    notifier: DefinedNotifier<Environments, Teams>,
+    warningNotifier: DefinedNotifier<Environments, Teams>,
+  ) {
+    super(scope, id, config, env, notifier, warningNotifier);
     const { defaultValue, logGroupName, metric, name, pattern, tags, value } = config;
 
     new LogsToMetric(this, 'metric', {
