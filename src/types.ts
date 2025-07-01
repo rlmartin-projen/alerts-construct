@@ -14,8 +14,7 @@ export interface NotificationEndpoints<T> {
 }
 export type TeamNotificationMap<Teams extends string, Notifier> = { [key in Teams]: NotificationEndpoints<Notifier> };
 
-export interface Alert<Namespace extends string, Environments> {
-  readonly env: keyof Environments;
+export interface Alert<Namespace extends string> {
   readonly name: string;
   readonly namespace?: Namespace;
   readonly description?: string;
@@ -29,14 +28,14 @@ export interface WithOwner<Teams> {
   readonly owner: Teams;
 }
 
-export interface ImplementationMap<Teams, Namespace extends string, Environments> {
-  [key: string | number | symbol]: Alert<Namespace, Environments> & WithOwner<Teams>;
+export interface ImplementationMap<Teams, Namespace extends string> {
+  [key: string | number | symbol]: Alert<Namespace> & WithOwner<Teams>;
 }
 
 export interface MonitoringConfig<
   Teams extends string,
   Namespace extends string,
-  Implementations extends ImplementationMap<Teams, Namespace, Environments>,
+  Implementations extends ImplementationMap<Teams, Namespace>,
   Environments,
   Notifier,
 > extends TaggedConstructConfig {

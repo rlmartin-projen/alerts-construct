@@ -3,7 +3,7 @@ import { AnyPattern, LogsToMetric } from './logsToMetric';
 import { AwsMetric, AwsMetricAlert, AwsMetricAlertConstruct } from './metricAlert';
 import { DefinedNotifier } from '../../notifiers';
 
-export interface AwsLogAlert<Namespace extends string, Environments> extends AwsMetricAlert<Namespace, Environments> {
+export interface AwsLogAlert<Namespace extends string> extends AwsMetricAlert<Namespace> {
   /**
    * Pattern to match and/or extract values from logs
    *
@@ -26,7 +26,7 @@ export class AwsLogAlertConstruct<
   constructor(
     scope: Construct,
     id: string,
-    config: AwsLogAlert<Namespace, Environments>,
+    config: AwsLogAlert<Namespace>,
     notifier: DefinedNotifier<Environments, Teams>,
     warningNotifier: DefinedNotifier<Environments, Teams>,
   ) {

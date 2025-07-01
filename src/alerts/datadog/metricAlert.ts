@@ -9,7 +9,7 @@ export class DatadogMetricAlertConstruct<
   constructor(
     scope: Construct,
     id: string,
-    config: DatadogMonitorAlert<Namespace, Environments>,
+    config: DatadogMonitorAlert<Namespace>,
     notifier: string,
     warningNotifier: string,
   ) {

@@ -10,7 +10,7 @@ export class DatadogLogAlertConstruct<
   constructor(
     scope: Construct,
     id: string,
-    config: DatadogMonitorAlert<Namespace, Environments>,
+    config: DatadogMonitorAlert<Namespace>,
     notifier: string,
     warningNotifier: string,
   ) {
@@ -39,16 +39,16 @@ export interface WithLogsQuery<EnvFilterType> {
 export function toAlerts<
   Teams extends string,
   Namespace extends string,
-  Environments,
+  Environment extends string,
   EnvFilterType extends string,
 >(
-  env: keyof Environments,
-  logAlerts: { [key:string]: Omit<DatadogMonitorAlert<Namespace, Environments> & WithOwner<Teams>, 'name' | 'query'> & WithLogsQuery<EnvFilterType> },
+  env: Environment,
+  logAlerts: { [key:string]: Omit<DatadogMonitorAlert<Namespace> & WithOwner<Teams>, 'name' | 'query'> & WithLogsQuery<EnvFilterType> },
   defaultEnvFilterType: EnvFilterType,
-  envFilterGenerator: (env: keyof Environments, envFilterType: EnvFilterType) => object,
+  envFilterGenerator: (env: Environment, envFilterType: EnvFilterType) => object,
   disabled: string[] = [],
-  nameGenerator: ((name: string, env: keyof Environments, namespace: Namespace | undefined) => string) = defaultNameGenerator,
-): (DatadogMonitorAlert<Namespace, Environments> & WithOwner<Teams>)[] {
+  nameGenerator: ((name: string, env: Environment, namespace: Namespace | undefined) => string) = defaultNameGenerator,
+): (DatadogMonitorAlert<Namespace> & WithOwner<Teams>)[] {
   return Object.entries(logAlerts).filter(([name, _]) => !disabled.includes(name)).map(([name, alert]) => {
     return {
       name: nameGenerator(name, env, alert.namespace),
@@ -68,12 +68,12 @@ export function toQueryString(query: LogsQuery, additionalQuery?: object): strin
   return `logs("${selector}").index("*").rollup("${aggregate}"${aggParam}).last("${timeSpan.num}${timeSpan.unit ?? 'm'}") ${comparator} ${threshold}`;
 }
 
-function defaultNameGenerator<Environments, Namespace extends string>(
+function defaultNameGenerator<Environment extends string, Namespace extends string>(
   name: string,
-  env: keyof Environments,
+  env: Environment,
   namespace: Namespace | undefined,
 ): string {
-  return `${namespace ? namespace + ' ' : ''}[${String(env)}] - ${name}`;
+  return `${namespace ? namespace + ' ' : ''}[${env}] - ${name}`;
 }
 
 function wrap(str: string): string {

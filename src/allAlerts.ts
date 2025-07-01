@@ -6,7 +6,7 @@ import { Alert, AlertConstruct, AlertConstructors, Alerts, ImplementationMap, Mo
 export abstract class AllAlerts<
   Teams extends string,
   Namespace extends string,
-  Implementations extends ImplementationMap<Teams, Namespace, Environments>,
+  Implementations extends ImplementationMap<Teams, Namespace>,
   Environments,
   Notifier extends string | object,
 > extends TaggedConstruct {
@@ -46,12 +46,12 @@ export abstract class AllAlerts<
     });
   }
 
-  envOverrides<T extends Alert<Namespace, Environments> & WithOwner<Teams>>(alert: T): T {
+  envOverrides<T extends Alert<Namespace> & WithOwner<Teams>>(alert: T): T {
     return alert;
   }
 
   getNotifier(
-    alert: Alert<Namespace, Environments> & WithOwner<Teams>,
+    alert: Alert<Namespace> & WithOwner<Teams>,
     forWarning: boolean = false,
   ): string | (Notifier & WithNotifierMetadata<Environments, Teams>) {
     const notifierTuple = this.severityMap[alert.severity];

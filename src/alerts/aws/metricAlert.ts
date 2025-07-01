@@ -34,7 +34,7 @@ export interface AwsMetric {
   };
 }
 
-export interface AwsMetricAlert<Namespace extends string, Environments> extends Alert<Namespace, Environments> {
+export interface AwsMetricAlert<Namespace extends string> extends Alert<Namespace> {
   readonly metric: AwsMetric;
   readonly watch: {
     readonly operator: ComparisonOperator;
@@ -46,7 +46,7 @@ export class AwsMetricAlertConstruct<Namespace extends string, Environments, Tea
   constructor(
     scope: Construct,
     id: string,
-    config: AwsMetricAlert<Namespace, Environments>,
+    config: AwsMetricAlert<Namespace>,
     notifier: DefinedNotifier<Environments, Teams>,
     warningNotifier: DefinedNotifier<Environments, Teams>,
   ) {

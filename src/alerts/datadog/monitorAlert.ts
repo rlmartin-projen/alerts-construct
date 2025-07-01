@@ -5,7 +5,7 @@ import { toDatadogNotifier } from './helper';
 import { DefinedNotifier } from '../../notifiers';
 import { Alert } from '../../types';
 
-export interface DatadogMonitorAlert<Namespace extends string, Environments> extends Alert<Namespace, Environments> {
+export interface DatadogMonitorAlert<Namespace extends string> extends Alert<Namespace> {
   readonly message?: string;
   readonly query: string;
 }
@@ -18,7 +18,7 @@ export class DatadogMonitorAlertConstruct<
   constructor(
     scope: Construct,
     id: string,
-    config: DatadogMonitorAlert<Namespace, Environments>,
+    config: DatadogMonitorAlert<Namespace>,
     notifier: DefinedNotifier<Environments, Teams>,
     warningNotifier: DefinedNotifier<Environments, Teams>,
     monitorType: DatadogMonitorType,
