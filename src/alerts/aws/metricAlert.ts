@@ -43,7 +43,13 @@ export interface AwsMetricAlert<Namespace extends string> extends Alert<Namespac
 }
 
 export class AwsMetricAlertConstruct<Namespace extends string, Environments, Teams extends string> extends Construct {
-  constructor(scope: Construct, id: string, config: AwsMetricAlert<Namespace>, notifier: DefinedNotifier<Environments, Teams>) {
+  constructor(
+    scope: Construct,
+    id: string,
+    config: AwsMetricAlert<Namespace>,
+    notifier: DefinedNotifier<Environments, Teams>,
+    warningNotifier: DefinedNotifier<Environments, Teams>,
+  ) {
     super(scope, id);
     const {
       autoClose = true, critical, description,
@@ -57,9 +63,11 @@ export class AwsMetricAlertConstruct<Namespace extends string, Environments, Tea
       warning,
     }));
 
-    const snsNotifier = toSnsNotifier(notifier, this, cleanName);
+    const snsCriticalNotifier = toSnsNotifier(notifier, this, cleanName);
+    const snsWarningNotifier = toSnsNotifier(warningNotifier, this, cleanName);
 
     Object.entries(setups).forEach(([setupName, threshold]) => {
+      const snsNotifier = setupName === 'warning' ? snsWarningNotifier : snsCriticalNotifier;
       new CloudwatchMetricAlarm(this, `${setupName}-monitor`, {
         alarmName: `${name}-${setupName}`,
         alarmDescription: description,

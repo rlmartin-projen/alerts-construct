@@ -6,7 +6,13 @@ export class DatadogMetricAlertConstruct<
   Environments,
   Teams extends string,
 > extends DatadogMonitorAlertConstruct<Namespace, Environments, Teams> {
-  constructor(scope: Construct, id: string, config: DatadogMonitorAlert<Namespace>, notifier: string) {
-    super(scope, id, config, notifier, 'query alert');
+  constructor(
+    scope: Construct,
+    id: string,
+    config: DatadogMonitorAlert<Namespace>,
+    notifier: string,
+    warningNotifier: string,
+  ) {
+    super(scope, id, config, notifier, warningNotifier, 'query alert');
   }
 }

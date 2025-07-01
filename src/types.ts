@@ -46,7 +46,13 @@ export interface MonitoringConfig<
 }
 
 export interface AlertConstruct<T, Teams, Environments, Notifier> {
-  new (scope: Construct, id: string, config: T, notifier: string | (Notifier & WithNotifierMetadata<Environments, Teams>)): Construct;
+  new (
+    scope: Construct,
+    id: string,
+    config: T,
+    notifier: string | (Notifier & WithNotifierMetadata<Environments, Teams>),
+    warningNotifier: string | (Notifier & WithNotifierMetadata<Environments, Teams>),
+  ): Construct;
 }
 
 export type AlertConstructors<T, Teams, Environments, Notifier> = { [K in keyof T]: AlertConstruct<T[K], Teams, Environments, Notifier> };
