@@ -42,7 +42,6 @@ export function toAlerts<
   Environments,
   EnvFilterType extends string,
 >(
-  env: keyof Environments,
   logAlerts: { [key:string]: Omit<DatadogMonitorAlert<Namespace, Environments> & WithOwner<Teams>, 'name' | 'query'> & WithLogsQuery<EnvFilterType> },
   defaultEnvFilterType: EnvFilterType,
   envFilterGenerator: (env: keyof Environments, envFilterType: EnvFilterType) => object,
@@ -51,9 +50,9 @@ export function toAlerts<
 ): (DatadogMonitorAlert<Namespace, Environments> & WithOwner<Teams>)[] {
   return Object.entries(logAlerts).filter(([name, _]) => !disabled.includes(name)).map(([name, alert]) => {
     return {
-      name: nameGenerator(name, env, alert.namespace),
+      name: nameGenerator(name, alert.env, alert.namespace),
       ...alert,
-      query: toQueryString(alert.query, envFilterGenerator(env, alert.envFilterType ?? defaultEnvFilterType)),
+      query: toQueryString(alert.query, envFilterGenerator(alert.env, alert.envFilterType ?? defaultEnvFilterType)),
     };
   });
 }

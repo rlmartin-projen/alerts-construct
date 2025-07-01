@@ -26,7 +26,7 @@ export class AwsMetricQueryAlertConstruct<Namespace extends string, Environments
   ) {
     super(scope, id);
     const {
-      autoClose = true, critical, description, equation, metrics,
+      autoClose = true, critical, description, env, equation, metrics,
       name, namespace, tags, watch: { forPeriods, operator }, warning,
     } = config;
     const cleanName = paramCase(`${namespace}-${name}`);
@@ -42,7 +42,7 @@ export class AwsMetricQueryAlertConstruct<Namespace extends string, Environments
     Object.entries(setups).forEach(([setupName, threshold]) => {
       const snsNotifier = setupName === 'warning' ? snsWarningNotifier : snsCriticalNotifier;
       new CloudwatchMetricAlarm(this, `${setupName}-monitor`, {
-        alarmName: `${name}-${setupName}`,
+        alarmName: `${name}-${setupName}${String(env) === 'prod' ? '' : ('-' + String(env))}`,
         alarmDescription: description,
         comparisonOperator: comparisonOperatorMap[operator],
         evaluationPeriods: forPeriods,
