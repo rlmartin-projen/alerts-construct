@@ -7,7 +7,8 @@ import { Alert } from '../../types';
 
 export type ComparisonOperator = '>' | '>=' | '<' | '<=';
 export type AggregateType = 'SampleCount' | 'Average' | 'Sum' | 'Minimum' | 'Maximum' | 'p95' | 'p99' | 'p99.9';
-export type AllowedSeconds = 10 | 30 | 60 | 120 | 180 | 240 | 300 | 360 | 420 | 480 | 540 | 600 | 900 | 1800 | 3600 | 7200 | 14400 | 28800 | 43200 | 86400;
+export type AllowedSeconds = 10 | 30 | 60 | 120 | 180 | 240 | 300 | 360 | 420 | 480 | 540 | 600 | 900 | 1800|
+  3600 | 7200 | 14400 | 28800 | 43200 | 86400;
 type AwsAlarmComparisonOperator =
   'GreaterThanOrEqualToThreshold'
   | 'GreaterThanThreshold'
