@@ -49,6 +49,9 @@ export class AwsMetricQueryAlertConstruct<Namespace extends string, Environments
         evaluationPeriods: forPeriods,
         metricQuery: [
           ...compact(Object.entries(metrics).map(([metricName, metric]) => {
+            if (metricName.toLowerCase() !== metricName) {
+              throw new Error(`Metric key names must be lowercase. Found: ${metricName}`);
+            }
             return metric ? {
               id: metricName,
               metric: {
