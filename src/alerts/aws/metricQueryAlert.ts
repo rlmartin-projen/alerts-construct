@@ -48,13 +48,10 @@ export class AwsMetricQueryAlertConstruct<Namespace extends string, Environments
         comparisonOperator: comparisonOperatorMap[operator],
         evaluationPeriods: forPeriods,
         metricQuery: [
-          {
-            id: 'equation',
-            expression: equation,
-            label: description,
-            returnData: true,
-          },
           ...compact(Object.entries(metrics).map(([metricName, metric]) => {
+            if (metricName.toLowerCase() !== metricName) {
+              throw new Error(`Metric key names must be lowercase. Found: ${metricName}`);
+            }
             return metric ? {
               id: metricName,
               metric: {
@@ -66,6 +63,12 @@ export class AwsMetricQueryAlertConstruct<Namespace extends string, Environments
               },
             } : undefined;
           })),
+          {
+            id: 'equation',
+            expression: equation,
+            label: description,
+            returnData: true,
+          },
         ],
         threshold,
         alarmActions: [snsNotifier.arn],
