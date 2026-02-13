@@ -1,4 +1,4 @@
-import { CloudwatchLogMetricFilter } from '@cdktf/provider-aws/lib/cloudwatch-log-metric-filter';
+import { CloudwatchLogMetricFilter } from '@cdktn/provider-aws/lib/cloudwatch-log-metric-filter';
 import { TaggedConstruct, TaggedConstructConfig } from '@rlmartin-projen/cdktf-project/lib/constructs/aws/taggedConstruct';
 import { Construct } from 'constructs';
 import { AwsMetric } from './metricAlert';

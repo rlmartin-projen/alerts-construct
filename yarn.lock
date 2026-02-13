@@ -275,15 +275,15 @@
   resolved "https://registry.yarnpkg.com/@cdktf/provider-archive/-/provider-archive-10.3.1.tgz#977c50ead51968aa4b56008197fdadbf685aa24f"
   integrity sha512-u82nAxtqsqBLtjwltMUuxswG0FOB8FC85QSNjtXTtJEt3+Yokym/UylfYtYHm3kG+uLC7AGVOl4W1n3Jyl7Prg==
 
-"@cdktf/provider-aws@~19":
-  version "19.65.1"
-  resolved "https://registry.yarnpkg.com/@cdktf/provider-aws/-/provider-aws-19.65.1.tgz#9b8339303d121b00100c54562ad1aa2788fb0854"
-  integrity sha512-pUvO9fYAgyc4MreWOZWkzz/lalxOvIAS2YEvBjIadJVqCUEiNN5EDWu5ofBp9Y1k+ncHzl3K6oPgBeYQYJz5kw==
-
 "@cdktf/provider-datadog@~10":
   version "10.1.0"
   resolved "https://registry.yarnpkg.com/@cdktf/provider-datadog/-/provider-datadog-10.1.0.tgz#cd3bbda540c09ed5f3cf156823049aab80a78cdc"
   integrity sha512-57vGCyeEyig0nABmmAOFpe4wjiAi4h5744aBT8MAeINQPCtZwBZCI3IkkKXxEbrZzOYqGemCTJIvk9N3ZE3rDg==
+
+"@cdktn/provider-aws@~22":
+  version "22.0.0"
+  resolved "https://registry.yarnpkg.com/@cdktn/provider-aws/-/provider-aws-22.0.0.tgz#fb0d52b8c45f4c8bb9a602f4d8cff8809c4c5ed5"
+  integrity sha512-ZzR4IfwJSGywUjtRQV5D456MJhJ7ozFp2oGVj+f0LPDQNDe/nx5PngB54+xqvPYI6WcMzghYYpB64nEwdS6LMA==
 
 "@cspotcode/source-map-support@^0.8.0":
   version "0.8.1"
@@ -746,13 +746,13 @@
   resolved "https://registry.yarnpkg.com/@pkgjs/parseargs/-/parseargs-0.11.0.tgz#a77ea742fab25775145434eb1d2328cf5013ac33"
   integrity sha512-+1VkjdD0QBLPodGrJUeqarH8VAIvQODIbwh9XpP5Syisf7YoQgsJKPNFoqqLQlu+VQ/tVSshMR6loPMn8U+dPg==
 
-"@rlmartin-projen/cdktf-project@~4":
-  version "4.6.4"
-  resolved "https://registry.yarnpkg.com/@rlmartin-projen/cdktf-project/-/cdktf-project-4.6.4.tgz#f16c53a93f1a35708b336c49eaa21df1720158eb"
-  integrity sha512-Bp/VfSQWlzrLu7/43XivaZqPzj6pJMBGi2EHoGUbRkF6FhVutKJc0DvI//8RNGJs8xW+uwcVicah6Bf3WqRjjw==
+"@rlmartin-projen/cdktf-project@~7":
+  version "7.0.2"
+  resolved "https://registry.yarnpkg.com/@rlmartin-projen/cdktf-project/-/cdktf-project-7.0.2.tgz#41cf4f213f5846192ecac1b5236b4cd494b6f24d"
+  integrity sha512-M9xio8fBwfWupko5LlUhACUZvROWOooFfIoOqfjEM16Khug6QSPBrQLot37R5X18bsKFBCaBVh13IBSx38JBsA==
   dependencies:
     "@cdktf/provider-archive" "~10"
-    "@cdktf/provider-aws" "~19"
+    "@cdktn/provider-aws" "~22"
     "@rlmartin-projen/projen-project" "~0"
     cdktf "~0"
     constructs "~10"
