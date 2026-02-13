@@ -21,9 +21,9 @@ const project = new typescript.TypeScriptProject({
     },
   },
   deps: [
-    '@cdktf/provider-aws@~19',
+    '@cdktn/provider-aws@~22',
     '@cdktf/provider-datadog@~10',
-    '@rlmartin-projen/cdktf-project@~4',
+    '@rlmartin-projen/cdktf-project@~7',
     'change-case@~4',
     'constructs@~10',
   ],

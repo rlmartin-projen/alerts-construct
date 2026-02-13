@@ -1,5 +1,5 @@
-import { SnsTopic } from '@cdktf/provider-aws/lib/sns-topic';
-import { SnsTopicSubscription } from '@cdktf/provider-aws/lib/sns-topic-subscription';
+import { SnsTopic } from '@cdktn/provider-aws/lib/sns-topic';
+import { SnsTopicSubscription } from '@cdktn/provider-aws/lib/sns-topic-subscription';
 import { Construct } from 'constructs';
 import { DefinedNotifier, isSnsNotifier, isWebhookNotifier, SnsNotifier } from '../../notifiers';
 import { NotificationEndpoints, TeamNotificationMap } from '../../types';

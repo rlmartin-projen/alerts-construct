@@ -1,4 +1,4 @@
-import { CloudwatchMetricAlarm } from '@cdktf/provider-aws/lib/cloudwatch-metric-alarm';
+import { CloudwatchMetricAlarm } from '@cdktn/provider-aws/lib/cloudwatch-metric-alarm';
 import { paramCase } from 'change-case';
 import { Construct } from 'constructs';
 import { toSnsNotifier } from './helper';
