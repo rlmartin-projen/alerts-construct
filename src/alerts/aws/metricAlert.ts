@@ -56,8 +56,10 @@ export class AwsMetricAlertConstruct<Namespace extends string, Environments, Tea
     super(scope, id);
     const {
       autoClose = true, critical, description,
-      metric: { aggregate: { overSeconds, type: aggregateType, missingData },
-      dimensions: metricDimensions, name: metricName, namespace: metricNamespace },
+      metric: {
+        aggregate: { overSeconds, type: aggregateType, missingData },
+        dimensions: metricDimensions, name: metricName, namespace: metricNamespace,
+      },
       name, namespace, tags, watch: { forPeriods, operator }, warning,
     } = config;
     const cleanName = paramCase(`${namespace}-${name}`);
