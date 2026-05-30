@@ -4,6 +4,8 @@ import { Construct } from 'constructs';
 import { DefinedNotifier, isSnsNotifier, isWebhookNotifier, SnsNotifier } from '../../notifiers';
 import { NotificationEndpoints, TeamNotificationMap } from '../../types';
 
+export type TreatMissingData = 'missing' | 'ignore' | 'breaching' | 'notBreaching';
+
 export function toSnsNotifier<Environments, Teams extends string>(
   notifier: DefinedNotifier<Environments, Teams>, scope: Construct, name: string,
 ): SnsNotifier {

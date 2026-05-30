@@ -1,7 +1,7 @@
 import { CloudwatchMetricAlarm } from '@cdktn/provider-aws/lib/cloudwatch-metric-alarm';
 import { paramCase } from 'change-case';
 import { Construct } from 'constructs';
-import { toSnsNotifier } from './helper';
+import { toSnsNotifier, TreatMissingData } from './helper';
 import { AwsMetric, ComparisonOperator, comparisonOperatorMap } from './metricAlert';
 import { compact } from '../../helpers';
 import { DefinedNotifier } from '../../notifiers';
@@ -13,6 +13,7 @@ export interface AwsMetricQueryAlert<Namespace extends string> extends Alert<Nam
   readonly watch: {
     readonly operator: ComparisonOperator;
     readonly forPeriods: number;
+    readonly missingData?: TreatMissingData;
   };
 }
 
@@ -28,7 +29,7 @@ export class AwsMetricQueryAlertConstruct<Namespace extends string, Environments
     super(scope, id);
     const {
       autoClose = true, critical, description, equation, metrics,
-      name, namespace, tags, watch: { forPeriods, operator }, warning,
+      name, namespace, tags, watch: { forPeriods, operator, missingData }, warning,
     } = config;
     const cleanName = paramCase(`${namespace}-${name}`);
 
@@ -46,6 +47,7 @@ export class AwsMetricQueryAlertConstruct<Namespace extends string, Environments
         alarmName: `${name}-${setupName}${String(env) === 'prod' ? '' : ('-' + String(env))}`,
         alarmDescription: description,
         comparisonOperator: comparisonOperatorMap[operator],
+        datapointsToAlarm: forPeriods,
         evaluationPeriods: forPeriods,
         metricQuery: [
           ...compact(Object.entries(metrics).map(([metricName, metric]) => {
@@ -74,6 +76,7 @@ export class AwsMetricQueryAlertConstruct<Namespace extends string, Environments
         alarmActions: [snsNotifier.arn],
         okActions: autoClose ? [snsNotifier.arn] : undefined,
         tags,
+        treatMissingData: missingData,
       });
     });
   }

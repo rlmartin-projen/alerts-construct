@@ -1,7 +1,7 @@
 import { CloudwatchMetricAlarm } from '@cdktn/provider-aws/lib/cloudwatch-metric-alarm';
 import { paramCase } from 'change-case';
 import { Construct } from 'constructs';
-import { toSnsNotifier } from './helper';
+import { toSnsNotifier, TreatMissingData } from './helper';
 import { DefinedNotifier } from '../../notifiers';
 import { Alert } from '../../types';
 
@@ -32,6 +32,7 @@ export interface AwsMetric {
   readonly aggregate: {
     readonly overSeconds: AllowedSeconds;
     readonly type: AggregateType;
+    readonly missingData?: TreatMissingData;
   };
 }
 
@@ -55,7 +56,7 @@ export class AwsMetricAlertConstruct<Namespace extends string, Environments, Tea
     super(scope, id);
     const {
       autoClose = true, critical, description,
-      metric: { aggregate: { overSeconds, type: aggregateType }, dimensions: metricDimensions, name: metricName, namespace: metricNamespace },
+      metric: { aggregate: { overSeconds, type: aggregateType, missingData }, dimensions: metricDimensions, name: metricName, namespace: metricNamespace },
       name, namespace, tags, watch: { forPeriods, operator }, warning,
     } = config;
     const cleanName = paramCase(`${namespace}-${name}`);
@@ -75,6 +76,7 @@ export class AwsMetricAlertConstruct<Namespace extends string, Environments, Tea
         alarmDescription: description,
         metricName,
         namespace: metricNamespace,
+        datapointsToAlarm: forPeriods,
         dimensions: metricDimensions,
         comparisonOperator: comparisonOperatorMap[operator],
         evaluationPeriods: forPeriods,
@@ -85,6 +87,7 @@ export class AwsMetricAlertConstruct<Namespace extends string, Environments, Tea
         alarmActions: [snsNotifier.arn],
         okActions: autoClose ? [snsNotifier.arn] : undefined,
         tags,
+        treatMissingData: missingData,
       });
     });
   }
