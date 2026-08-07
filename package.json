@@ -47,7 +47,7 @@
   "dependencies": {
     "@cdktf/provider-datadog": "~10",
     "@cdktn/provider-aws": "~22",
-    "@rlmartin-projen/cdktf-project": "~7",
+    "@rlmartin-projen/cdktf-project": "~8",
     "change-case": "~4",
     "constructs": "~10"
   },

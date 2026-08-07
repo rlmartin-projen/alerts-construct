@@ -83,7 +83,7 @@
     },
     {
       "name": "@rlmartin-projen/cdktf-project",
-      "version": "~7",
+      "version": "~8",
       "type": "runtime"
     },
     {
