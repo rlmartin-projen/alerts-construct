@@ -72,18 +72,18 @@
       "type": "build"
     },
     {
-      "name": "@cdktf/provider-datadog",
-      "version": "~10",
+      "name": "@cdktn/provider-aws",
+      "version": "~25",
       "type": "runtime"
     },
     {
-      "name": "@cdktn/provider-aws",
-      "version": "~22",
+      "name": "@cdktn/provider-datadog",
+      "version": "~15",
       "type": "runtime"
     },
     {
       "name": "@rlmartin-projen/cdktf-project",
-      "version": "~7",
+      "version": "~8",
       "type": "runtime"
     },
     {

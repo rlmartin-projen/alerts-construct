@@ -45,9 +45,9 @@
     "typescript": "^5.9.3"
   },
   "dependencies": {
-    "@cdktf/provider-datadog": "~10",
-    "@cdktn/provider-aws": "~22",
-    "@rlmartin-projen/cdktf-project": "~7",
+    "@cdktn/provider-aws": "~25",
+    "@cdktn/provider-datadog": "~15",
+    "@rlmartin-projen/cdktf-project": "~8",
     "change-case": "~4",
     "constructs": "~10"
   },

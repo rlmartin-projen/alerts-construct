@@ -1,4 +1,4 @@
-import { Webhook } from '@cdktf/provider-datadog/lib/webhook';
+import { Webhook } from '@cdktn/provider-datadog/lib/webhook';
 import { paramCase } from 'change-case';
 import { Construct } from 'constructs';
 import { DefinedNotifier, isSnsNotifier, isWebhookNotifier, WithNotifierMetadata, ZendutyWebhookNotifier } from '../../notifiers';

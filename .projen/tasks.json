@@ -335,8 +335,8 @@
             "ts-jest",
             "ts-node",
             "typescript",
-            "@cdktf/provider-datadog",
             "@cdktn/provider-aws",
+            "@cdktn/provider-datadog",
             "@rlmartin-projen/cdktf-project",
             "change-case"
           ]
