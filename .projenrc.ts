@@ -1,7 +1,7 @@
+import { unifyNpmReleaseTrigger } from '@rlmartin-projen/projen-project/lib/helpers';
 import { typescript } from 'projen';
 import { NpmAccess } from 'projen/lib/javascript';
 import { ReleaseTrigger } from 'projen/lib/release';
-import { unifyNpmReleaseTrigger } from '@rlmartin-projen/projen-project/lib/helpers';
 
 const majorVersion = 0;
 const options: typescript.TypeScriptProjectOptions = {
@@ -24,8 +24,8 @@ const options: typescript.TypeScriptProjectOptions = {
     },
   },
   deps: [
-    '@cdktn/provider-aws@~22',
-    '@cdktf/provider-datadog@~10',
+    '@cdktn/provider-aws@~25',
+    '@cdktn/provider-datadog@~15',
     '@rlmartin-projen/cdktf-project@~8',
     'change-case@~4',
     'constructs@~10',

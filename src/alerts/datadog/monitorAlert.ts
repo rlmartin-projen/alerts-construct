@@ -1,4 +1,4 @@
-import { Monitor } from '@cdktf/provider-datadog/lib/monitor';
+import { Monitor } from '@cdktn/provider-datadog/lib/monitor';
 import { Construct } from 'constructs';
 import { DatadogMonitorType, severityToDatadogPriority, transformTags } from '.';
 import { toDatadogNotifier } from './helper';
@@ -45,7 +45,7 @@ export class DatadogMonitorAlertConstruct<
         critical: critical.toString(),
         warning: warning?.toString(),
       },
-      priority: severityToDatadogPriority[severity],
+      priority: severityToDatadogPriority[severity].toString(),
       tags: transformTags(tags),
     });
   }

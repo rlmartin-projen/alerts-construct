@@ -270,25 +270,25 @@
   resolved "https://registry.yarnpkg.com/@bcoe/v8-coverage/-/v8-coverage-0.2.3.tgz#75a2e8b51cb758a7553d6804a5932d7aace75c39"
   integrity sha512-0hYQ8SB4Db5zvZB4axdMHGwEaQjkZzFjQiN9LVYvIFB2nSUHW9tYpxWriPrWDASIxiaXax83REcLxuSdnGPZtw==
 
-"@cdktf/provider-datadog@~10":
-  version "10.1.0"
-  resolved "https://registry.yarnpkg.com/@cdktf/provider-datadog/-/provider-datadog-10.1.0.tgz#cd3bbda540c09ed5f3cf156823049aab80a78cdc"
-  integrity sha512-57vGCyeEyig0nABmmAOFpe4wjiAi4h5744aBT8MAeINQPCtZwBZCI3IkkKXxEbrZzOYqGemCTJIvk9N3ZE3rDg==
-
 "@cdktn/provider-archive@~12":
   version "12.0.0"
   resolved "https://registry.yarnpkg.com/@cdktn/provider-archive/-/provider-archive-12.0.0.tgz#7142bf0f3ea720af58a986d724ce8623e15ae84c"
   integrity sha512-oLPjPV2e6DctbMKeTu0Y+YQSt69bCwCj4HJ5/mKPq0C+2XpD7MWl8X+GlqFOira0U6NCJHut3ctp5FSsrElOHg==
 
-"@cdktn/provider-aws@~22":
-  version "22.1.0"
-  resolved "https://registry.yarnpkg.com/@cdktn/provider-aws/-/provider-aws-22.1.0.tgz#ad1303a526ebc7577d9e2fd5380557669f85b7e9"
-  integrity sha512-mvDK+/xEHZYhu/gCmgj2s041hDvDDUNvuQFVAycsSJAGYzHR9TZnL+cNB8/OOpkMRQx8OQ/Bwz3B1+3XP4orRg==
-
 "@cdktn/provider-aws@~23":
   version "23.10.1"
   resolved "https://registry.yarnpkg.com/@cdktn/provider-aws/-/provider-aws-23.10.1.tgz#8b85d94057d3843f6fd63ed7730045537b42b0aa"
   integrity sha512-tk22DOyiBIEHvFon55FS17KN1jz7TFc+HUdRlX+lYTKNO/Byj/lLDFL5rmd+wTVGCx28a6jtCXxNh5QwV0Vd5g==
+
+"@cdktn/provider-aws@~25":
+  version "25.0.0"
+  resolved "https://registry.yarnpkg.com/@cdktn/provider-aws/-/provider-aws-25.0.0.tgz#203f946d028bbd26bf0f911c8336d1b14a9fc4d8"
+  integrity sha512-9ogmOmVW2sN1BvTWgBN0JuMyMBlrc0ATKQ1LwWNI+q1H/hYbhyTXfKXYNbyXaBpRSlWVmKEGIq4kkAUlJG3i3w==
+
+"@cdktn/provider-datadog@~15":
+  version "15.6.0"
+  resolved "https://registry.yarnpkg.com/@cdktn/provider-datadog/-/provider-datadog-15.6.0.tgz#70b97b046ee82d1d4f16b21300c4efcb1c02a5f8"
+  integrity sha512-cHMOX3iZv/zS3KO6oFGKT3rhM7mKL7Q0V8clv9WE7bIi7EcdOItF2sESFBAdZCe3kCGqgjprLvbjJ5aEx8eewQ==
 
 "@cspotcode/source-map-support@^0.8.0":
   version "0.8.1"
